@@ -60,7 +60,7 @@
           var pastaElement = document.querySelector('#pastas ul li ul');
           subpastas.forEach(subpasta => {
             var subpastaElement = document.createElement('li');
-            subpastaElement.innerHTML = '<a href="https://drive.google.com/open?id=${pasta.id}&usp=drive+fs">' + subpasta.textContent + '</a>';
+            subpastaElement.innerHTML = '<a href="https://drive.google.com/open?id=${pasta.id}&usp=drive+fs">${pasta.textContent}</a>';
             pastaElement.appendChild(subpastaElement);
           });
         });
