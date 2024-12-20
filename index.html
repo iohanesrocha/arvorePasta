@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Árvore de Pastas do Google Drive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .pastas {
+      margin-left: 20px;
+    }
+    
+    .pasta {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .pasta:hover {
+      background-color: #f0f0f0;
+    }
+    
+    a {
+      text-decoration: none;
+      color: #337ab7;
+    }
+    
+    a:hover {
+      color: #23527c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Árvore de Pastas do Google Drive</h1>
+  <div id="pastas">
+    <ul>
+      <li>
+        <a href="https://drive.google.com/drive/folders/1G1SNtXZUVGvhQSJtJ7JykizeD3WgfnFX">Pasta Raiz</a>
+        <ul>
+          <!-- Subpastas serão carregadas aqui -->
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    // Função para carregar subpastas
+    function carregarSubpastas(pastaId) {
+      var url = 'https://drive.google.com/drive/folders/' + pastaId + '?usp=drive_fs';
+      
+      // Carregar subpastas
+      fetch(url)
+        .then(response => response.text())
+        .then(html => {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(html, 'text/html');
+          var subpastas = doc.querySelectorAll('.drive-other-file-name');
+          
+          // Criar estrutura de subpastas
+          var pastaElement = document.querySelector('#pastas ul li ul');
+          subpastas.forEach(subpasta => {
+            var subpastaElement = document.createElement('li');
+            subpastaElement.innerHTML = '<a href="https://drive.google.com/open?id=${pasta.id}&usp=drive+fs">' + subpasta.textContent + '</a>';
+            pastaElement.appendChild(subpastaElement);
+          });
+        });
+    }
+    
+    // Carregar subpastas da pasta raiz
+    carregarSubpastas('1G1SNtXZUVGvhQSJtJ7JykizeD3WgfnFX');
+  </script>
+</body>
+</html>
